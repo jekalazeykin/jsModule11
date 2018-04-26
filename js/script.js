@@ -13,9 +13,14 @@ const getAllUsers = () => {
           if (response.ok) return response.json();
           throw new Error("Error fetching data");
         })
-        .then(data => {
-          console.log("clients list:", data);
-          outputUsers.textContent = JSON.stringify(data);
+        .then(users => {
+          const obj = users;
+          for(let i =0; i< obj.data.length; i++){
+          const table = document.createElement('tr');
+          table.classList.add(`class${i}`);
+          outputUsers.append(table);
+          table.textContent =   JSON.stringify(`id: ${obj.data[i].id} name: ${obj.data[i].name}  age: ${obj.data[i].age}`);
+      }
         })
         .catch(error => {
           console.error("Error:", error);
@@ -32,8 +37,9 @@ const getUserById = () => {
           if (response.ok) return response.json();
           throw new Error("Error fetching data");
         })
-        .then(data => {
-          outputUser.textContent = JSON.stringify(data);
+        .then(user => {
+          const object = user;
+          outputUser.textContent = JSON.stringify(`name: ${object.data.name}, age: ${object.data.age}` );
         })
         .catch(error => {
           console.error("Error:", error);
